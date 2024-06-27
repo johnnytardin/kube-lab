@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "cluster-data"
+name = "kube-lab"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Johnny Tardin <johnnytardin@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

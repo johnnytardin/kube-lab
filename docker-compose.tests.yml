@@ -9,5 +9,5 @@ services:
       CLUSTER_URL: https://k3s-server:6443
     command: python -m unittest discover tests
     depends_on:
-      - cluster-data
+      - api
       - k3s-server

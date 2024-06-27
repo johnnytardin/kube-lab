@@ -1,5 +1,5 @@
 network:
-	@if [ $(shell docker network ls -q --filter name=cluster-data | wc -l) -eq 0 ]; then docker network create cluster-data; fi
+	@if [ $(shell docker network ls -q --filter name=kube-lab | wc -l) -eq 0 ]; then docker network create kube-lab; fi
 
 start: network
 	@docker compose -f docker-compose.yml up -d --build

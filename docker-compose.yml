@@ -28,27 +28,8 @@ services:
       timeout: 5s
       retries: 3
 
-  agent:
-    image: "rancher/k3s:${K3S_VERSION:-latest}"
-    tmpfs:
-    - /run
-    - /var/run
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 65535
-        hard: 65535
-    privileged: true
-    restart: always
-    environment:
-    - K3S_URL=https://k3s-server:6443
-    - K3S_KUBECONFIG_OUTPUT=/kubeconfig/kubeconfig.yaml
-    - K3S_TOKEN=2c538a14fa510963f2ec22d51c3edd156a3b5cc4
-    volumes:
-    - ./.k3s-agent:/var/lib/rancher/k3s
-
-  cluster-data:
-    image: cluster-data
+  api:
+    image: api
     build:
       dockerfile: Dockerfile
       context: .
@@ -66,4 +47,3 @@ services:
 
 volumes:
   k3s-server: {}
-  k3s-agent: {}
