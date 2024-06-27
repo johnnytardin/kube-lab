@@ -1,0 +1,13 @@
+services:
+  tests:
+    build: .
+    container_name: tests
+    volumes:
+      - ./.kubeconfig:/kubeconfig
+    environment:
+      KUBECONFIG: /kubeconfig/kubeconfig.yaml
+      CLUSTER_URL: https://k3s-server:6443
+    command: python -m unittest discover tests
+    depends_on:
+      - cluster-data
+      - k3s-server
