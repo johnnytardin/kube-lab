@@ -68,7 +68,7 @@ def configure_routes(app: FastAPI):
     @router.get("/ingresses/{namespace}", response_class=JSONResponse, tags=["ingresses"])
     def ingresses_in_namespace(namespace: str):
         try:
-            ingress_data = get_deployments(namespace)
+            ingress_data = get_ingresses(namespace)
             return JSONResponse(content=ingress_data)
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
@@ -81,7 +81,7 @@ def configure_routes(app: FastAPI):
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
 
-    @router.get("/jobs_data/{namespace}", response_class=JSONResponse, tags=["jobs"])
+    @router.get("/jobs/{namespace}", response_class=JSONResponse, tags=["jobs"])
     def jobs_in_namespace(namespace: str):
         try:
             jobs_data = get_jobs(namespace)
