@@ -2,7 +2,7 @@ FROM python:3.11.4-slim
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock /app/
+COPY . .
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
@@ -12,6 +12,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pip install --no-cache-dir poetry && \
     poetry config virtualenvs.create false && poetry install --no-dev
 
-COPY . .
 
 CMD ["python", "run.py"]

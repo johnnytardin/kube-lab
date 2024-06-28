@@ -1,5 +1,5 @@
 import uvicorn
-from app import create_app
+from src.api import create_app
 
 app = create_app()
 

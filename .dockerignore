@@ -3,3 +3,4 @@ __pycache__
 .k3s-agent/
 .k3s-server/
 .kubeconfig/
+.secrets
