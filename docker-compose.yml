@@ -5,8 +5,7 @@ services:
     privileged: true
     volumes:
       - ./.kubeconfig:/kubeconfig
-      - ./.k3s-server:/var/lib/rancher/k3s
-      - .:/output
+      - .k3s-server:/var/lib/rancher/k3s
     command: server
     tmpfs:
       - /run
@@ -28,6 +27,24 @@ services:
       timeout: 5s
       retries: 3
 
+  k3s-agent:
+    image: "rancher/k3s:${K3S_VERSION:-latest}"
+    tmpfs:
+    - /run
+    - /var/run
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+    privileged: true
+    restart: always
+    environment:
+    - K3S_URL=https://k3s-server:6443
+    - K3S_TOKEN=2c538a14fa510963f2ec22d51c3edd156a3b5cc4
+    volumes:
+    - k3s-agent:/var/lib/rancher/k3s
+
   api:
     image: api
     build:
@@ -47,3 +64,4 @@ services:
 
 volumes:
   k3s-server: {}
+  k3s-agent: {}

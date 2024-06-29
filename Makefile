@@ -5,7 +5,7 @@ start: network
 	@docker compose -f docker-compose.yml up -d --build
 
 test: network
-	@docker compose -f docker-compose.tests.yml -f docker-compose.yml up -d 
+	@docker compose -f docker-compose.tests.yml -f docker-compose.yml up -d
 
 stop:
 	@docker compose -f docker-compose.yml down

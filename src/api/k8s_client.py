@@ -35,7 +35,8 @@ def create_namespace(name):
     body = client.V1Namespace(metadata=client.V1ObjectMeta(name=name))
     v1.create_namespace(body=body)
 
-def get_pods(namespace):
+
+def get_pods(namespace=None):
     load_kube_config()
     v1 = client.CoreV1Api()
     if namespace:
@@ -43,6 +44,7 @@ def get_pods(namespace):
     else:
         pods = v1.list_pod_for_all_namespaces()
     return [pod.metadata.name for pod in pods.items]
+
 
 def get_cluster_info():
     load_kube_config()
@@ -66,8 +68,9 @@ def get_cluster_info():
         return cluster_info
     except Exception as e:
         print(f"Error fetching cluster info: {e}")
-    
+
     return None
+
 
 def get_deployments(namespace=None):
     load_kube_config()
@@ -78,6 +81,7 @@ def get_deployments(namespace=None):
         deployments = v1.list_deployment_for_all_namespaces().items
     return [deployment.metadata.name for deployment in deployments]
 
+
 def get_services(namespace=None):
     load_kube_config()
     v1 = client.CoreV1Api()
@@ -86,6 +90,7 @@ def get_services(namespace=None):
     else:
         services = v1.list_service_for_all_namespaces().items
     return [service.metadata.name for service in services]
+
 
 def get_daemonsets(namespace=None):
     load_kube_config()
@@ -96,6 +101,7 @@ def get_daemonsets(namespace=None):
         daemonsets = v1.list_daemon_set_for_all_namespaces().items
     return [daemonset.metadata.name for daemonset in daemonsets]
 
+
 def get_ingresses(namespace=None):
     load_kube_config()
     v1 = client.NetworkingV1Api()
@@ -105,6 +111,7 @@ def get_ingresses(namespace=None):
         ingresses = v1.list_ingress_for_all_namespaces().items
     return [ingress.metadata.name for ingress in ingresses]
 
+
 def get_jobs(namespace=None):
     load_kube_config()
     v1 = client.BatchV1Api()
@@ -113,4 +120,3 @@ def get_jobs(namespace=None):
     else:
         jobs = v1.list_job_for_all_namespaces().items
     return [job.metadata.name for job in jobs]
-

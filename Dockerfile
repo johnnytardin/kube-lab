@@ -1,9 +1,10 @@
-FROM python:3.11.4-slim
+FROM python:3.11.9-slim
 
 WORKDIR /app
 
 COPY . .
 
+# hadolint ignore=DL3008,DL3013
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && \
