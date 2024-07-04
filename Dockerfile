@@ -13,5 +13,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pip install --no-cache-dir poetry && \
     poetry config virtualenvs.create false && poetry install --no-dev
 
+EXPOSE 8000
 
 CMD ["python", "run.py"]

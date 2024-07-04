@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kube-lab.fullname" . }}-svc
+  labels:
+  {{- include "kube-lab.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.svc.type }}
+  selector:
+    app: kube-lab
+  {{- include "kube-lab.selectorLabels" . | nindent 4 }}
+  ports:
+	{{- .Values.svc.ports | toYaml | nindent 2 }}

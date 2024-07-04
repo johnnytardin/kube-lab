@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kube-lab.fullname" . }}-app
+  labels:
+    app: kube-lab
+    owner: k8s
+    {{- include "kube-lab.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: kube-lab
+      {{- include "kube-lab.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: kube-lab
+        owner: k8s
+        {{- include "kube-lab.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: kube-lab-app
+          image: {{ .Values.app.kubeLabApp.image.repository }}:{{ .Values.app.kubeLabApp.image.tag | default .Chart.AppVersion }}
+          ports:
+            - containerPort: 8000
+          resources:
+            {{- toYaml .Values.app.kubeLabApp.resources | nindent 12 }}

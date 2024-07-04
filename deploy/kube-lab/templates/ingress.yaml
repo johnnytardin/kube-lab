@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "kube-lab.fullname" . }}-ingress
+  labels:
+  {{- include "kube-lab.labels" . | nindent 4 }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: '{{ include "kube-lab.fullname" . }}-svc'
+            port:
+              number: 8000
+        path: /
+        pathType: ImplementationSpecific
