@@ -5,9 +5,9 @@ metadata:
   labels:
   {{- include "kube-lab.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.svc.type }}
+  type: {{ .Values.service.type }}
   selector:
     app: kube-lab
   {{- include "kube-lab.selectorLabels" . | nindent 4 }}
   ports:
-	{{- .Values.svc.ports | toYaml | nindent 2 }}
+  {{- .Values.service.ports | toYaml | nindent 2 }}

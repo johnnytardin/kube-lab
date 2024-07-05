@@ -1,20 +1,27 @@
-app:
-  kubeLabApp:
-    image:
-      repository: johnnytardin/kube-lab
-      tag: latest
-    resources:
-      limits:
-        cpu: 500m
-        memory: 512Mi
-      requests:
-        cpu: 250m
-        memory: 256Mi
-  replicas: 2
-svc:
-  ports:
-  - port: 8000
-    targetPort: 8000
-  type: ClusterIP
+image:
+  repository: johnnytardin/kube-lab
+  tag: latest
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+replicas: 2
+
+service:
+    ports:
+    - port: 8000
+      targetPort: 8000
+    type: ClusterIP
+
 ingress:
+  enabled: true
+  ingressClassName: traefik
   host: kube-lab.local
+
+linkerd:
+  inject: true

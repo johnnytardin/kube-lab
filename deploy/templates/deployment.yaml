@@ -7,13 +7,15 @@ metadata:
     owner: k8s
     {{- include "kube-lab.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.app.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app: kube-lab
       {{- include "kube-lab.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: "{{ .Values.linkerd.inject }}"
       labels:
         app: kube-lab
         owner: k8s
@@ -21,8 +23,8 @@ spec:
     spec:
       containers:
         - name: kube-lab-app
-          image: {{ .Values.app.kubeLabApp.image.repository }}:{{ .Values.app.kubeLabApp.image.tag | default .Chart.AppVersion }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
           ports:
             - containerPort: 8000
           resources:
-            {{- toYaml .Values.app.kubeLabApp.resources | nindent 12 }}
+            {{- toYaml .Values.resources | nindent 12 }}
