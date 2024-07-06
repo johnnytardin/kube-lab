@@ -1,3 +1,6 @@
+
+fullnameOverride: ""
+
 image:
   repository: johnnytardin/kube-lab
   tag: latest
