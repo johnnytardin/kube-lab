@@ -15,7 +15,7 @@ replicas: 2
 
 nodeSelector:
   kubernetes.io/os: linux
-  workload: management
+  workload: general
 
 service:
     ports:
