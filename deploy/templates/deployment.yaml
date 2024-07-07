@@ -28,3 +28,5 @@ spec:
             - containerPort: 8000
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      nodeSelector:
+        {{ .Values.nodeSelector }}
