@@ -7,7 +7,7 @@ services:
     environment:
       KUBECONFIG: /kubeconfig/kubeconfig.yaml
       CLUSTER_URL: https://k3s-server:6443
-    command: python -m unittest discover tests
+    command: python -m pytest
     depends_on:
       - api
       - k3s-server
