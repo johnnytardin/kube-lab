@@ -1,6 +1,5 @@
-import base64
-import os
 import yaml
+
 from kubernetes import config, client
 from src.api.config import Config
 
@@ -10,28 +9,16 @@ def load_kube_config():
     Load Kubernetes configuration based on provided authentication method.
     Priority:
     1. AUTH_TOKEN: Use a Bearer token for authentication.
-    2. KUBECONFIG_BASE64 with CLUSTER_URL: Modify the provided kubeconfig with the specified cluster URL.
     3. KUBECONFIG: Use the provided kubeconfig file as is.
     """
 
-    if Config.AUTH_TOKEN:
+    if Config.CLUSTER_AUTH_TOKEN:
         configuration = client.Configuration()
-        configuration.api_key["authorization"] = Config.AUTH_TOKEN
+        configuration.api_key["authorization"] = Config.CLUSTER_AUTH_TOKEN
         configuration.api_key_prefix["authorization"] = "Bearer"
         configuration.host = Config.CLUSTER_URL
         configuration.verify_ssl = False
         client.Configuration.set_default(configuration)
-    elif Config.KUBECONFIG_BASE64:
-        try:
-            kubeconfig_base64 = os.getenv("KUBECONFIG_BASE64")
-            kubeconfig_bytes = base64.b64decode(kubeconfig_base64)
-            kubeconfig_str = kubeconfig_bytes.decode('utf-8')
-            kubeconfig = yaml.safe_load(kubeconfig_str)
-            config.load_kube_config_from_dict(config_dict=kubeconfig)
-        except (TypeError, base64.binascii.Error) as e:
-            raise ValueError("Error decoding base64 kubeconfig data.")
-        except yaml.YAMLError:
-            raise ValueError("Error parsing the kubeconfig file.")
     elif Config.KUBECONFIG:
         try:
             with open(Config.KUBECONFIG, "r") as f:

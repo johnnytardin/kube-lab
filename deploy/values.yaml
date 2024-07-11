@@ -31,4 +31,6 @@ ingress:
 linkerd:
   inject: true
 
-kubeconfigBase64: ""
+authToken: ""
+
+clusterUrl: ""

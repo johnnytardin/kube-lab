@@ -27,11 +27,13 @@ spec:
           ports:
             - containerPort: 8000
           env:
-            - name: KUBECONFIG_BASE64
+            - name: CLUSTER_AUTH_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kube-lab.kubeconfigSecretName" . }}
-                  key: kubeconfig
+                  name: {{ include "kube-lab.authTokenSecretName" . }}
+                  key: authToken
+            - name: CLUSTER_URL
+              value: {{ .Values.clusterUrl | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       nodeSelector:
