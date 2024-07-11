@@ -5,15 +5,33 @@ from src.api.config import Config
 
 
 def load_kube_config():
-    if Config.CLUSTER_URL:
-        with open(Config.KUBECONFIG, "r") as f:
-            kubeconfig = yaml.safe_load(f)
+    """
+    Load Kubernetes configuration based on provided authentication method.
+    Priority:
+    1. AUTH_TOKEN: Use a Bearer token for authentication.
+    2. KUBECONFIG with CLUSTER_URL: Modify the provided kubeconfig with the specified cluster URL.
+    3. KUBECONFIG: Use the provided kubeconfig file as is.
+    """
 
-        kubeconfig["clusters"][0]["cluster"]["server"] = Config.CLUSTER_URL
-        config.load_kube_config_from_dict(config_dict=kubeconfig)
-    else:
-        config.load_kube_config(config_file=Config.KUBECONFIG)
+    if Config.AUTH_TOKEN:
+        configuration = client.Configuration()
+        configuration.api_key["authorization"] = Config.AUTH_TOKEN
+        configuration.api_key_prefix["authorization"] = "Bearer"
+        configuration.host = Config.CLUSTER_URL
+        configuration.verify_ssl = False
+        client.Configuration.set_default(configuration)
+    elif Config.KUBECONFIG:
+        try:
+            with open(Config.KUBECONFIG, "r") as f:
+                kubeconfig = yaml.safe_load(f)
 
+            if Config.CLUSTER_URL:
+                kubeconfig["clusters"][0]["cluster"]["server"] = Config.CLUSTER_URL
+            config.load_kube_config_from_dict(config_dict=kubeconfig)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"Kubeconfig file {Config.KUBECONFIG} not found.")
+        except yaml.YAMLError:
+            raise ValueError("Error parsing the kubeconfig file.")
 
 def get_nodes():
     load_kube_config()

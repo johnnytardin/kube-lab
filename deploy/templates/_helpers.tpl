@@ -60,3 +60,10 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Generate the name of the auth token secret
+*/}}
+{{- define "kube-lab.authTokenSecretName" -}}
+{{ include "kube-lab.fullname" . }}-auth-token
+{{- end }}

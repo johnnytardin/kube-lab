@@ -30,3 +30,5 @@ ingress:
 
 linkerd:
   inject: true
+
+authToken: ""
