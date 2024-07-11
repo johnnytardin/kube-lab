@@ -63,6 +63,7 @@ services:
     environment:
       KUBECONFIG: /kubeconfig/kubeconfig.yaml
       CLUSTER_URL: https://k3s-server:6443
+      # CLUSTER_AUTH_TOKEN:
 
 volumes:
   k3s-server: {}
