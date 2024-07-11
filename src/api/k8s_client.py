@@ -33,6 +33,7 @@ def load_kube_config():
         except yaml.YAMLError:
             raise ValueError("Error parsing the kubeconfig file.")
 
+
 def get_nodes():
     load_kube_config()
     v1 = client.CoreV1Api(None)
