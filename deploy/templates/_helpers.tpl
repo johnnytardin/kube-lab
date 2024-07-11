@@ -62,8 +62,8 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Generate the name of the auth token secret
+Generate the name of the kubeconfig secret
 */}}
-{{- define "kube-lab.authTokenSecretName" -}}
-{{ include "kube-lab.fullname" . }}-auth-token
+{{- define "kube-lab.kubeconfigSecretName" -}}
+{{ include "kube-lab.fullname" . }}-kubeconfig
 {{- end }}

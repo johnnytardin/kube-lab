@@ -31,4 +31,4 @@ ingress:
 linkerd:
   inject: true
 
-authToken: ""
+kubeconfigBase64: ""

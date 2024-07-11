@@ -27,11 +27,11 @@ spec:
           ports:
             - containerPort: 8000
           env:
-            - name: AUTH_TOKEN
+            - name: KUBECONFIG_BASE64
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "kube-lab.authTokenSecretName" . }}
-                  key: authToken
+                  name: {{ include "kube-lab.kubeconfigSecretName" . }}
+                  key: kubeconfig
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       nodeSelector:
