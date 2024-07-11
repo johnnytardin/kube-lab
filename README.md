@@ -6,7 +6,6 @@ KubeLab is a project demonstrating Kubernetes development and management practic
 Before you begin, ensure you have the following installed:
 
 - Docker
-- Docker Compose
 - Make
 
 ## Setup

@@ -17,6 +17,7 @@ logs:
 	@docker compose logs -f
 
 clean:
+	@docker compose -f docker-compose.yml down -v
 	@sudo rm -rf .k3s-agent/ .k3s-server/ .kubeconfig/
 
 restart:
