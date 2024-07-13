@@ -5,7 +5,7 @@ metadata:
   labels:
   {{- include "kube-lab.labels" . | nindent 4 }}
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: "{{ .Values.ingress.ingressClassName }}"
 spec:
   ingressClassName: "{{ .Values.ingress.ingressClassName }}"
   rules:
