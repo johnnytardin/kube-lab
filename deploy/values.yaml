@@ -26,6 +26,7 @@ service:
 ingress:
   enabled: true
   ingressClassName: web
+  routerEntrypoints: web
   host: kube-lab.local
 
 linkerd:
